@@ -1,0 +1,270 @@
+name: example-uart-c
+type: app
+version: "1.0"
+platform: esp32
+platforms:
+- cc3200
+- cc3220
+- esp32
+- esp8266
+author: mongoose-os
+description: UART usage example in C/C++
+sources:
+- /fwbuild-volumes/2.0/apps/example-uart-c/esp32/build_contexts/build_ctx_129320520/src/main.c
+- /fwbuild-volumes/2.0/apps/example-uart-c/esp32/build_contexts/build_ctx_129320520/build/gen/mgos_deps_init.c
+- /fwbuild-volumes/2.0/apps/example-uart-c/esp32/build_contexts/build_ctx_129320520/libs/ca-bundle/src/mgos_ca_bundle.c
+- /fwbuild-volumes/2.0/apps/example-uart-c/esp32/build_contexts/build_ctx_129320520/libs/i2c/src/mgos_i2c.c
+- /fwbuild-volumes/2.0/apps/example-uart-c/esp32/build_contexts/build_ctx_129320520/libs/i2c/esp32/src/esp32_i2c_master.c
+- /fwbuild-volumes/2.0/apps/example-uart-c/esp32/build_contexts/build_ctx_129320520/libs/rpc-common/src/mg_rpc/mg_rpc.c
+- /fwbuild-volumes/2.0/apps/example-uart-c/esp32/build_contexts/build_ctx_129320520/libs/rpc-common/src/mg_rpc/mg_rpc_channel.c
+- /fwbuild-volumes/2.0/apps/example-uart-c/esp32/build_contexts/build_ctx_129320520/libs/rpc-common/src/mg_rpc/mg_rpc_channel_http.c
+- /fwbuild-volumes/2.0/apps/example-uart-c/esp32/build_contexts/build_ctx_129320520/libs/rpc-common/src/mg_rpc/mg_rpc_channel_ws.c
+- /fwbuild-volumes/2.0/apps/example-uart-c/esp32/build_contexts/build_ctx_129320520/libs/rpc-common/src/mgos_rpc.c
+- /fwbuild-volumes/2.0/apps/example-uart-c/esp32/build_contexts/build_ctx_129320520/libs/rpc-service-config/src/mgos_service_config.c
+- /fwbuild-volumes/2.0/apps/example-uart-c/esp32/build_contexts/build_ctx_129320520/libs/rpc-service-fs/src/mgos_service_filesystem.c
+- /fwbuild-volumes/2.0/apps/example-uart-c/esp32/build_contexts/build_ctx_129320520/libs/rpc-uart/src/mgos_rpc_channel_uart.c
+- /fwbuild-volumes/2.0/apps/example-uart-c/esp32/build_contexts/build_ctx_129320520/libs/spi/src/mgos_spi.c
+- /fwbuild-volumes/2.0/apps/example-uart-c/esp32/build_contexts/build_ctx_129320520/libs/spi/src/mgos_spi_mjs.c
+- /fwbuild-volumes/2.0/apps/example-uart-c/esp32/build_contexts/build_ctx_129320520/libs/spi/src/esp32/esp32_spi_master.c
+includes:
+- /fwbuild-volumes/2.0/apps/example-uart-c/esp32/build_contexts/build_ctx_129320520/libs/mongoose/include
+- /fwbuild-volumes/2.0/apps/example-uart-c/esp32/build_contexts/build_ctx_129320520/libs/i2c/include
+- /fwbuild-volumes/2.0/apps/example-uart-c/esp32/build_contexts/build_ctx_129320520/libs/rpc-common/include/mg_rpc
+- /fwbuild-volumes/2.0/apps/example-uart-c/esp32/build_contexts/build_ctx_129320520/libs/rpc-common/include
+- /fwbuild-volumes/2.0/apps/example-uart-c/esp32/build_contexts/build_ctx_129320520/libs/rpc-service-config/include
+- /fwbuild-volumes/2.0/apps/example-uart-c/esp32/build_contexts/build_ctx_129320520/libs/rpc-service-fs/include
+- /fwbuild-volumes/2.0/apps/example-uart-c/esp32/build_contexts/build_ctx_129320520/libs/rpc-uart/include
+- /fwbuild-volumes/2.0/apps/example-uart-c/esp32/build_contexts/build_ctx_129320520/libs/spi/include
+filesystem:
+- /fwbuild-volumes/2.0/apps/example-uart-c/esp32/build_contexts/build_ctx_129320520/libs/ca-bundle/fs/ca.pem
+binary_libs:
+- /fwbuild-volumes/2.0/apps/example-uart-c/esp32/build_contexts/build_ctx_129320520/libs/mongoose/lib/esp32/libmongoose.a
+libs:
+- origin: https://github.com/mongoose-os-libs/mongoose
+  location: https://github.com/mongoose-os-libs/mongoose
+  suffixtpl: ""
+config_schema:
+- - i2c
+  - o
+  - title: I2C settings
+- - i2c.enable
+  - b
+  - false
+  - title: Enable I2C
+- - i2c.freq
+  - i
+  - 100000
+  - title: Clock frequency
+- - i2c.debug
+  - b
+  - false
+  - title: Debug I2C bus activity
+- - i2c.unit_no
+  - i
+  - 0
+  - title: Which hardware unit ot use, 0 or 1
+- - i2c.sda_gpio
+  - i
+  - 32
+  - title: GPIO to use for SDA
+- - i2c.scl_gpio
+  - i
+  - 33
+  - title: GPIO to use for SCL
+- - rpc
+  - o
+  - title: RPC settings
+- - rpc.enable
+  - b
+  - true
+  - title: Enable RPC
+- - rpc.max_frame_size
+  - i
+  - 4096
+  - title: Max Frame Size
+- - rpc.max_queue_length
+  - i
+  - 25
+  - title: Max Queue Length
+- - rpc.default_out_channel_idle_close_timeout
+  - i
+  - 10
+  - title: Default idle close timeout for outbound channels
+- - rpc.acl_file
+  - s
+  - title: File with RPC ACL JSON
+- - rpc.auth_domain
+  - s
+  - title: Realm to use for digest authentication
+- - rpc.auth_file
+  - s
+  - title: File with user credentials in the htdigest format
+- - rpc.ws
+  - o
+  - title: RPC over WebSocket settings
+- - rpc.ws.enable
+  - b
+  - true
+  - title: Enable RPC over WebSocket
+- - rpc.ws.server_address
+  - s
+  - ""
+  - title: Cloud server address
+- - rpc.ws.reconnect_interval_min
+  - i
+  - 1
+  - title: Minimal reconnect interval
+- - rpc.ws.reconnect_interval_max
+  - i
+  - 60
+  - title: Maximal reconnect interval
+- - rpc.ws.ssl_server_name
+  - s
+  - title: TLS Server Name
+- - rpc.ws.ssl_ca_file
+  - s
+  - title: TLS CA file
+- - rpc.ws.ssl_client_cert_file
+  - s
+  - title: TLS client cert file
+- - rpc.uart
+  - o
+  - title: RPC-over-UART settings
+- - rpc.uart.uart_no
+  - i
+  - title: UART number (-1 to disable)
+- - rpc.uart.baud_rate
+  - i
+  - 115200
+  - title: Baud rate
+- - rpc.uart.fc_type
+  - i
+  - 2
+  - title: 'Flow control: 0 - none, 1 - CTS/RTS, 2 - XON/XOFF'
+- - rpc.uart.wait_for_start_frame
+  - b
+  - true
+  - title: Wait for an incoming frame before using the channel
+- - spi
+  - o
+  - title: SPI settings
+- - spi.enable
+  - b
+  - false
+  - title: Enable SPI
+- - spi.debug
+  - b
+  - false
+  - title: Debug SPI bus activity
+- - spi.unit_no
+  - i
+  - 3
+  - title: Which SPI unit to use, 2 or 3
+- - spi.miso_gpio
+  - i
+  - 19
+  - title: GPIO to use for MISO
+- - spi.mosi_gpio
+  - i
+  - 23
+  - title: GPIO to use for MOSI
+- - spi.sclk_gpio
+  - i
+  - 18
+  - title: GPIO to use for SCLK
+- - spi.cs0_gpio
+  - i
+  - 5
+  - title: GPIO to use for CS0
+- - spi.cs1_gpio
+  - i
+  - -1
+  - title: GPIO to use for CS1
+- - spi.cs2_gpio
+  - i
+  - -1
+  - title: GPIO to use for CS2
+build_vars:
+  ESP_IDF_EXTRA_COMPONENTS: ""
+  ESP_IDF_SDKCONFIG_OPTS: ""
+  MGOS_ENABLE_I2C_GPIO: "0"
+  MGOS_ENABLE_SPI_GPIO: "0"
+  MGOS_HAVE_CA_BUNDLE: "1"
+  MGOS_HAVE_I2C: "1"
+  MGOS_HAVE_MONGOOSE: "1"
+  MGOS_HAVE_RPC_COMMON: "1"
+  MGOS_HAVE_RPC_SERVICE_CONFIG: "1"
+  MGOS_HAVE_RPC_SERVICE_FS: "1"
+  MGOS_HAVE_RPC_UART: "1"
+  MGOS_HAVE_SPI: "1"
+cdefs:
+  MGOS_ENABLE_RPC_CHANNEL_HTTP: "1"
+  MGOS_ENABLE_RPC_CHANNEL_WS: "1"
+  MGOS_ENABLE_SYS_SERVICE: "1"
+  MGOS_HAVE_CA_BUNDLE: "1"
+  MGOS_HAVE_I2C: "1"
+  MGOS_HAVE_MONGOOSE: "1"
+  MGOS_HAVE_RPC_COMMON: "1"
+  MGOS_HAVE_RPC_SERVICE_CONFIG: "1"
+  MGOS_HAVE_RPC_SERVICE_FS: "1"
+  MGOS_HAVE_RPC_UART: "1"
+  MGOS_HAVE_SPI: "1"
+tags:
+- c
+- hw
+libs_version: "2.0"
+modules_version: "2.0"
+mongoose_os_version: "2.0"
+manifest_version: 2017-05-18
+libs_handled:
+- name: mongoose
+  path: /fwbuild-volumes/2.0/apps/example-uart-c/esp32/build_contexts/build_ctx_129320520/libs/mongoose
+- name: ca-bundle
+  path: /fwbuild-volumes/2.0/apps/example-uart-c/esp32/build_contexts/build_ctx_129320520/libs/ca-bundle
+  deps:
+  - mongoose
+  sources:
+  - /fwbuild-volumes/2.0/apps/example-uart-c/esp32/build_contexts/build_ctx_129320520/libs/ca-bundle/src/mgos_ca_bundle.c
+- name: i2c
+  path: /fwbuild-volumes/2.0/apps/example-uart-c/esp32/build_contexts/build_ctx_129320520/libs/i2c
+  deps:
+  - mongoose
+  sources:
+  - /fwbuild-volumes/2.0/apps/example-uart-c/esp32/build_contexts/build_ctx_129320520/libs/i2c/src/mgos_i2c.c
+  - /fwbuild-volumes/2.0/apps/example-uart-c/esp32/build_contexts/build_ctx_129320520/libs/i2c/esp32/src/esp32_i2c_master.c
+- name: rpc-common
+  path: /fwbuild-volumes/2.0/apps/example-uart-c/esp32/build_contexts/build_ctx_129320520/libs/rpc-common
+  deps:
+  - http-server
+  sources:
+  - /fwbuild-volumes/2.0/apps/example-uart-c/esp32/build_contexts/build_ctx_129320520/libs/rpc-common/src/mg_rpc/mg_rpc.c
+  - /fwbuild-volumes/2.0/apps/example-uart-c/esp32/build_contexts/build_ctx_129320520/libs/rpc-common/src/mg_rpc/mg_rpc_channel.c
+  - /fwbuild-volumes/2.0/apps/example-uart-c/esp32/build_contexts/build_ctx_129320520/libs/rpc-common/src/mg_rpc/mg_rpc_channel_http.c
+  - /fwbuild-volumes/2.0/apps/example-uart-c/esp32/build_contexts/build_ctx_129320520/libs/rpc-common/src/mg_rpc/mg_rpc_channel_ws.c
+  - /fwbuild-volumes/2.0/apps/example-uart-c/esp32/build_contexts/build_ctx_129320520/libs/rpc-common/src/mgos_rpc.c
+- name: rpc-service-config
+  path: /fwbuild-volumes/2.0/apps/example-uart-c/esp32/build_contexts/build_ctx_129320520/libs/rpc-service-config
+  deps:
+  - rpc-common
+  sources:
+  - /fwbuild-volumes/2.0/apps/example-uart-c/esp32/build_contexts/build_ctx_129320520/libs/rpc-service-config/src/mgos_service_config.c
+- name: rpc-service-fs
+  path: /fwbuild-volumes/2.0/apps/example-uart-c/esp32/build_contexts/build_ctx_129320520/libs/rpc-service-fs
+  deps:
+  - rpc-common
+  sources:
+  - /fwbuild-volumes/2.0/apps/example-uart-c/esp32/build_contexts/build_ctx_129320520/libs/rpc-service-fs/src/mgos_service_filesystem.c
+- name: rpc-uart
+  path: /fwbuild-volumes/2.0/apps/example-uart-c/esp32/build_contexts/build_ctx_129320520/libs/rpc-uart
+  deps:
+  - rpc-common
+  sources:
+  - /fwbuild-volumes/2.0/apps/example-uart-c/esp32/build_contexts/build_ctx_129320520/libs/rpc-uart/src/mgos_rpc_channel_uart.c
+- name: spi
+  path: /fwbuild-volumes/2.0/apps/example-uart-c/esp32/build_contexts/build_ctx_129320520/libs/spi
+  deps:
+  - mongoose
+  sources:
+  - /fwbuild-volumes/2.0/apps/example-uart-c/esp32/build_contexts/build_ctx_129320520/libs/spi/src/mgos_spi.c
+  - /fwbuild-volumes/2.0/apps/example-uart-c/esp32/build_contexts/build_ctx_129320520/libs/spi/src/mgos_spi_mjs.c
+  - /fwbuild-volumes/2.0/apps/example-uart-c/esp32/build_contexts/build_ctx_129320520/libs/spi/src/esp32/esp32_spi_master.c
